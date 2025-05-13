@@ -1,7 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 const app=express()
+
+app.use(bodyParser.json())
+
+app.use(bodyParser.urlencoded({extended:true}))
 
 dotenv.config()
 
@@ -25,6 +30,14 @@ const userSchema= new mongoose.Schema({
 const userModel=mongoose.model("users",userSchema)
 
 app.get("/getusers",async (req,res)=>{
-    const userData=await userModel.find()
+    const userData = await userModel.find()
     res.json(userData)
 })
+
+app.post("/getusers",async (req,res)=>{
+    const newData = new userModel(req.body)
+    const saved = await newData.save()
+    res.json(saved)
+})
+
+
