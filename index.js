@@ -59,4 +59,12 @@ app.put("/getusers/:id",async (req,res)=>{
    }
 })
 
-
+app.delete("/getusers/:id",async (req,res)=>{
+    const product = await userModel.findById(req.params.id)
+    if(product===null){
+      res.json(req.params.id+" this id not found")
+    }else{
+      const deleted= await userModel.findByIdAndDelete(req.params.id)
+      res.json("successfuly deleted "+req.params.id)
+    }
+})
