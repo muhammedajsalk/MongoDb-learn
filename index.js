@@ -49,3 +49,14 @@ app.post("/getusers",async (req,res)=>{
     res.json(saved)
 })
 
+
+app.put("/getusers/:id",async (req,res)=>{
+   const updated=await userModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
+   if(updated===null){
+    res.json("you entered id is not there")
+   }else{
+    res.json(updated)
+   }
+})
+
+
