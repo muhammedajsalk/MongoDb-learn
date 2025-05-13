@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 const app=express()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}))
 
 dotenv.config()
 
@@ -34,10 +34,18 @@ app.get("/getusers",async (req,res)=>{
     res.json(userData)
 })
 
+app.get("/getusers/:id",async (req,res)=>{
+    const product = await userModel.findById(req.params.id)
+    if(product===null){
+      res.json({message:"you entered id is not available this site"})
+    }else{
+      res.json(product)
+    }
+})
+
 app.post("/getusers",async (req,res)=>{
     const newData = new userModel(req.body)
     const saved = await newData.save()
     res.json(saved)
 })
-
 
