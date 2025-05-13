@@ -1,25 +1,18 @@
-const express=require("express")
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 const app=express()
 
-const MongoClient = require('mongodb').MongoClient
+dotenv.config()
 
-MongoClient.connect('mongodb://localhost:27017/store', (err, client) => {
-  if (err) throw err
+const PORT=process.env.PORT || 7000
+const MONGO_URL=process.env.MONGO_URL
 
-  const db = client.db('store')
-
-  db.collection('product').find().toArray((err, result) => {
-    if (err) throw err
-
-    console.log(result)
+mongoose.connect(MONGO_URL)
+.then(()=>{
+  console.log("database is created");
+  app.listen(PORT,()=>{
+    console.log("server is runnig "+PORT)
   })
 })
-
-
-app.get('/',(req,res)=>{
-   res.send("hello world")
-})
-
-app.listen(3000,()=>{
-    console.log("the server 3000")
-})
+.catch((err)=>console.log("server is error found "+err))
