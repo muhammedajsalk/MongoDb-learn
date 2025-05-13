@@ -16,3 +16,9 @@ mongoose.connect(MONGO_URL)
   })
 })
 .catch((err)=>console.log("server is error found "+err))
+
+const userSchema= new mongoose.Schema({
+  name:String,
+  age:Number
+})
+
