@@ -22,3 +22,9 @@ const userSchema= new mongoose.Schema({
   age:Number
 })
 
+const userModel=mongoose.model("users",userSchema)
+
+app.get("/getusers",async (req,res)=>{
+    const userData=await userModel.find()
+    res.json(userData)
+})
